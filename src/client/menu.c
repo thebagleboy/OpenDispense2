@@ -40,6 +40,8 @@ int ShowNCursesUI(void)
 	 int	maxItemIndex;
 	 int	itemBase = 0;
 	 int	currentItem;
+	 int	itemQuantity[];	// Number of items of [currentItem]
+	 			// Do I need to bother initializing to 0?
 	 int	ret = -2;	// -2: Used for marking "no return yet"
 	
 	char	balance_str[5+1+2+1];	// If $9999.99 is too little, something's wrong
@@ -76,6 +78,15 @@ int ShowNCursesUI(void)
 			while( ShowItemAt(0, 0, 0, currentItem, 0) == -1 )
 				currentItem --;
 		}
+	}
+	
+	void _decrementQuantity(void)
+	{
+		_ItemQuantity[currentItem] --;
+	}
+	void _incrementQuantity(void)
+	{
+		_ItemQuantity[currentItem] ++;
 	}
 
 	// Get Username
@@ -215,10 +226,10 @@ int ShowNCursesUI(void)
 			case '\n':
 				ret = ShowItemAt(0, 0, 0, currentItem, 0);
 				break;
-			case 'h':	break;
-			case 'j':	_ItemDown();	break;
-			case 'k':	_ItemUp();	break;
-			case 'l':	break;
+			case 'h':	_decrementQuantity();	break;
+			case 'j':	_ItemDown();		break;
+			case 'k':	_ItemUp();		break;
+			case 'l':	_incrementQuantity();	break;
 			case 'q':
 				ret = -1;	// -1: Return with no dispense
 				break;
