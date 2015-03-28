@@ -82,11 +82,20 @@ int ShowNCursesUI(void)
 	
 	void _decrementQuantity(void)
 	{
-		_ItemQuantity[currentItem] --;
+		if(_ItemQuantity[currentItem] > 0)
+		{
+			_ItemQuantity[currentItem] --;
+		}
 	}
 	void _incrementQuantity(void)
-	{
-		_ItemQuantity[currentItem] ++;
+	{	
+		// If you want to limit the number dispensed at one time
+		//  change the inequality
+		//  set to -1 or remove otherwise
+		if(_ItemQuantity[currentItem] < 10)
+		{
+			_ItemQuantity[currentItem] ++;
+		}
 	}
 
 	// Get Username
